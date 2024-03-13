@@ -1,11 +1,16 @@
 <div class="text-center my-24">
   <h1 class="tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-    <span>Starter Kit</span><br>
-    <span class="text-indigo-600">Rails + Ralix + Tailwind</span>
+    <span style="font-size: 0.4em;">VR 4D &amp; 3D plastic &amp; cosmetic surgery simulator software</span><br>
+    <span class="text-indigo-600">WELLCOME TO CRISALIX</span>
   </h1>
 
-  <p class="mt-5 mb-10 text-gray-500 sm:text-lg md:text-xl">Starter Kit to build Rails applications fast, with Ralix, Tailwind and more!</p>
-
-  <a href="https://github.com/ralixjs/rails-ralix-tailwind" class="btn">Get started</a>
-  <a href="<%= articles_path %>" class="btn btn-outline ml-4">Explore app</a>
+  <p class="mt-5 mb-10 text-gray-500 sm:text-lg md:text-xl">Discover your potential new look in 3D before cosmetic surgery</p>
+    <% if user_signed_in? %>
+       <% if current_user.role == 'patient' %>
+         <%= link_to 'Get an appointment', new_appointment_path, class:"btn" %>     
+        <%= link_to 'Meet our doctors', users_path, class:"btn btn-outline ml-4" %>
+      <% end %>
+ 
+      <%= link_to 'Appointments', appointments_path, class:"btn btn-outline ml-4" %>
+    <% end %>
 </div>

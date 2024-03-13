@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @q = User.ransack(params[:q])
+    #@q = User.ransack(params[:q])
+    @q = User.where(role: "doctor").ransack(params[:q])
     @pagy, @users = pagy(@q.result.order(created_at: :desc), items: 5)
   end
 

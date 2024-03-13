@@ -1,5 +1,20 @@
-<h1>Users</h1>
+<h1>Find a Crisalix Doctor by name or city:</h1>
+<% if current_user.role == 'patient'%>
+ <div class="mt-8">
+   <%= link_to 'New Appointment', new_appointment_path, class:"btn btn-facebook" %>
+ </div>
+<% end %>
+<br>
+<%= search_form_for @q, data: { turbo_frame: "search" } do |f| %>
+  <div class="relative">
+    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+      <%= heroicon "magnifying-glass" %>
+    </div>
+    <%= f.text_field :name_or_city_cont, class: "search-input p-3 pl-10 text-sm", onkeyup: "search()", placeholder: "Search by Name or City..." %>
+  </div>
+<% end %>
 
+<%= turbo_frame_tag "search", target: "_top" do %>
 <div class="table-responsive mt-8">
   <table>
     <thead>
@@ -7,8 +22,7 @@
         <th></th>
         <th><%= sort_link(@q, :name) %></th>
         <th><%= sort_link(@q, :email) %></th>
-        <th><%= sort_link(@q, :created_at) %></th>
-        <th></th>
+        <th><%= sort_link(@q, :city) %></th>
       </tr>
     </thead>
     <tbody>
@@ -23,11 +37,8 @@
           <td>
             <%= mail_to user.email, 'data-tippy-content': 'Click to send an email' %>
           </td>
-          <td>
-            <span data-tippy-content="<%= format_time(user.created_at) %>"><%= time_ago user.created_at %></span>
-          </td>
-          <td>
-            <a data-modal-url="<%= "/users/#{user.id}" %>" data-modal-title="User details" class="btn btn-outline">Details</a>
+            <td>
+            <%= user.city %>
           </td>
         </tr>
       <% end %>
@@ -38,3 +49,4 @@
 <div class="text-center mt-10">
   <%== pagy_nav(@pagy) %>
 </div>
+<% end %>

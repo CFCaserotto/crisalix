@@ -1,15 +1,23 @@
 <nav class="bg-gray-800">
   <div class="mx-auto px-6 md:px-12">
     <div class="flex h-16 items-center justify-between">
-      <div class="flex items-center">
+      <div class="flex items-center px-5">
         <div class="flex-shrink-0">
-          <a href="<%= root_path %>" class="text-white text-2xl">Starter Kit</h2>
+          <%= image_tag  "icons/crisalix.png", class: "h-8 w-8" %>
         </div>
         <div class="hidden sm:block">
           <div class="ml-8 flex items-baseline space-x-4">
             <a href="<%= root_path %>" class="<%= nav_link_class("home") %>">Home</a>
-            <a href="<%= articles_path %>" class="<%= nav_link_class("articles") %>">Articles</a>
-            <a href="<%= users_path %>" class="<%= nav_link_class("users") %>">Users</a>
+            <% if user_signed_in? %>
+              
+                <a href="<%= appointments_path %>" class="<%= nav_link_class("appointments") %>">Appointments</a>
+                
+            <% end %>
+            <% if user_signed_in? %>
+              <% if current_user.role == 'patient'%>
+                <a href="<%= users_path %>" class="<%= nav_link_class("users") %>">Directory</a>
+              <% end %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -17,11 +25,36 @@
         <div class="ml-4 flex items-center md:ml-6">
           <div class="relative ml-3">
             <% if user_signed_in? %>
+            <span class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> 
+              <%= current_user.role === "doctor" ? "Doctor:" : "Patient:" %>
+              <%= current_user.name %>
+            </span>
+            <% end %>
+        </div>
+        <div class="ml-4 flex items-center md:ml-6">
+          <div class="relative ml-3">
+            <% if user_signed_in? %>
+              <span class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> <%= current_user.email %></span>
+            <% end %>
+          </div>
+          <div class="relative ml-3">
+            <% if user_signed_in? %>
+              <%= link_to "Logout", destroy_user_session_path, 
+                  class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium",
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "You are login out. Are you sure?"
+                  } %>
+            <% end %>
+          </div>
+          <div class="relative ml-3">
+            <% if user_signed_in? %>
               <a href="<%= edit_user_path %>" class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm">
                 <%= avatar(current_user) %>
               </a>
             <% else %>
               <%= link_to "Sign in", new_user_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link_to "Sign up", new_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             <% end %>
           </div>
         </div>
@@ -37,8 +70,10 @@
   <div class="sm:hidden hidden mobile-menu">
     <div class="space-y-2 px-2 pb-3 sm:px-3">
       <a href="<%= root_path %>" class="<%= nav_link_class("home", "block") %>">Home</a>
-      <a href="<%= articles_path %>" class="<%= nav_link_class("articles", "block") %>">Articles</a>
-      <a href="<%= users_path %>" class="<%= nav_link_class("users", "block") %>">Users</a>
+      <a href="<%= appointments_path %>" class="<%= nav_link_class("appointments") %>">Appointments</a>
+      
+        <a href="<%= users_path %>" class="<%= nav_link_class("users", "block") %>">Directory</a>
+      
       <% unless user_signed_in? %>
         <a href="<%= new_user_session_path %>" class="<%= nav_link_class(nil, "block") %>">Sign in</a>
       <% end %>
@@ -49,10 +84,6 @@
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
               <%= avatar(current_user) %>
-            </div>
-            <div class="ml-3">
-              <div class="text-base font-medium leading-none text-white"><%= current_user.name %></div>
-              <div class="text-sm font-medium leading-none text-gray-400"><%= current_user.email %></div>
             </div>
           </div>
         </a>

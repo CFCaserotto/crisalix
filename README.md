@@ -39,3 +39,31 @@ Start the development server:
 ```
 > bin/dev
 ```
+## Comment
+Sign-in Instructions:
+
+To sign in as a patient, please use the following credentials:
+Email: gemma@example.com
+Password: password
+
+To sign in as a doctor, please use the following credentials:
+Email: gemmadr@example.com
+Password: password
+
+Seed Data:
+The application comes pre-seeded with the following data:
+
+5 patient accounts
+5 doctor accounts
+Some appointments with three fake photos attached.
+
+To run tests:
+You can run the following commands to execute the different types of tests:
+Model Tests:
+- rspec spec/models
+Request Tests:
+- rspec spec/requests
+Feature Tests:
+- rspec spec/features
+
+

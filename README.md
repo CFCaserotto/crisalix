@@ -66,4 +66,4 @@ Request Tests:
 Feature Tests:
 - rspec spec/features
 
-
+PS. "If ./bin/dev does not respond, use the following commands: rails assets:precompile, and then bundle exec rails server."

@@ -1,0 +1,39 @@
+<!-- app/views/appointments/index.html.erb -->
+<h1>Appointments for <%= current_user.role === "doctor" ? "doctors" : "patients" %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Patient</th>
+      <th>Doctor</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= appointment.date.strftime('%B %d, %Y %I:%M %p') %></td>
+        <td><%= appointment.patient.name if appointment.patient.present? %></td>
+        <td><%= appointment.doctor.name if appointment.doctor.present? %></td>
+        <td>
+          <%= link_to 'Show', appointment, class:"btn btn-outline" %>
+          <% if current_user.role == 'patient'%>
+          <%= link_to 'Edit', edit_appointment_path(appointment),class: "btn btn-outline" %>
+          <%= link_to "Cancel", appointment, 
+                    class: "btn btn-danger",
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Cancel this appointment?"
+                    } %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if current_user.role == 'patient'%>
+ <div class="mt-8">
+   <%= link_to 'New Appointment', new_appointment_path, class:"btn btn-facebook" %>
+ </div>
+<% end %>

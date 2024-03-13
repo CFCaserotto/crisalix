@@ -1,0 +1,28 @@
+<p>
+  <strong>Date:</strong>
+  <%= @appointment.date %>
+</p>
+<p>
+  <strong>Patient:</strong>
+  <%= @appointment.patient.name if @appointment.patient.present? %>
+</p>
+<p>
+  <strong>Doctor:</strong>
+  <%= @appointment.doctor.name if @appointment.doctor.present? %>
+</p>
+<div>
+  <% if @appointment.photo1.attached? %>
+    <%= image_tag url_for(@appointment.photo1), style: "width: 150px; height: auto;" %>
+  <% end %>
+  <% if @appointment.photo2.attached? %>
+    <%= image_tag url_for(@appointment.photo2), style: "width: 150px; height: auto;" %>
+  <% end %>
+  <% if @appointment.photo3.attached? %>
+    <%= image_tag url_for(@appointment.photo3), style: "width: 150px; height: auto;" %>
+  <% end %>
+</div>
+
+<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
+<%= link_to 'Back', appointments_path %>
+
+

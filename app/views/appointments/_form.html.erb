@@ -1,0 +1,57 @@
+<%= form_with model: appointment, html: { class: "max-w-md mx-auto" }  do |form| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+      <ul>
+        <% @appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+  </div>
+  <% end %>
+  <div class="mb-6">
+    <%= form.label :doctor_id, "Doctor", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.collection_select :doctor_id, User.where(role: 'doctor'), :id, :name, {prompt: "Select a doctor"}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  </div>
+  <div class="flex">
+    <div class="w-1/2 mr-2">
+      <%= form.label :date, "Date", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.date_field :date, id:"Date", class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 hover:bg-gray-300", min: Date.today %>
+    </div>
+    <div class="w-1/2 ml-2">
+      <%= form.label :time, "Time", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.time_field :time, id:"Time", class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 hover:bg-gray-300" %>
+    </div>
+  </div>
+  <div>
+    <%= form.hidden_field :patient_id, id:"patient", value: current_user.id %>
+  </div>
+  <div class="mb-6">
+    <%= form.label :photo1, 'Upload Photo 1', class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.file_field :photo1, 
+        id: "photo1_input", 
+        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",  
+        accept: "image/jpeg, image/png, image/gif"  
+     %>
+  </div>
+  <div class="mb-6">
+    <%= form.label :photo2, 'Upload Photo 2', class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.file_field :photo2, 
+        id: "photo2_input", 
+        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",  
+        accept: "image/jpeg, image/png, image/gif"  
+     %>
+  </div>
+  <div class="mb-6">
+    <%= form.label :photo3, 'Upload Photo 3', class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.file_field :photo3, 
+        id: "photo3_input", 
+        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",  
+        accept: "image/jpeg, image/png, image/gif"  
+     %>
+  </div>
+  <div class="flex justify-center">
+    <%= form.submit "Submit", class: "btn btn-outline ml-4" %>
+  </div>
+<% end %>
+

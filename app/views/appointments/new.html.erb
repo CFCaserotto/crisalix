@@ -1,0 +1,4 @@
+<h1 class="text-center">New Appointment for <%= current_user.name %></h1>
+<%= render 'form', appointment: @appointment %>
+<%= link_to 'Back', appointments_path, class:"btn" %>
+<%= link_to 'Directoy', users_path, class:"btn" %>

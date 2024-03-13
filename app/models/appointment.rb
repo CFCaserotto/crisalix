@@ -3,7 +3,7 @@ class Appointment < ApplicationRecord
     belongs_to :doctor, class_name: 'User'
     
     validates :date, :time, :doctor_id, :photo1, :photo2, :photo3, presence: true
-    #has_many_attached :photos
+    
     has_one_attached :photo1
     has_one_attached :photo2
     has_one_attached :photo3

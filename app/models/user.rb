@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   has_many :appointments_as_patient, class_name: 'Appointment', foreign_key: 'patient_id', dependent: :destroy
   has_many :appointments_as_doctor, class_name: 'Appointment', foreign_key: 'doctor_id', dependent: :destroy
+  
+  
 
   def self.ransackable_attributes(auth_object = nil)
     ["city", "name"]
@@ -22,7 +24,7 @@ class User < ApplicationRecord
   def doctor?
     role == 'doctor'
   end
-
+  
   def name
     @name ||= self[:name].presence || email.split("@").first
   end
